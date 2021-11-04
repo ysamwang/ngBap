@@ -1,0 +1,13 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+src/*.o
+src/*.so
+src/*.dll
+.Rhistory (swang24-ubuntu's conflicted copy 2021-02-27)
+.Rhistory (sam-laptop's conflicted copy 2021-07-30)
+.Rbuildignore
+DESCRIPTION~
+NAMESPACE~
+ngBap.Rproj

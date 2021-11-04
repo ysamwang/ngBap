@@ -1,0 +1,12 @@
+Package: ngBap
+Type: Package
+Title: Estimates BAP structures assuming non-Gaussian errors
+Version: 1.0.0
+Author: Y. Samuel Wang, Mathias Drton
+Maintainer: Y. Samuel Wang <ysw7@cornell.edu>
+Description: Estimates the causal structure of a linear SEM assuming the true model has non-Gaussian errors and corresponds to a graph which is a Bow-free Acylic Path diagram 
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Imports: emplik, dHSIC, energy
+LinkingTo: 
