@@ -16,7 +16,8 @@ library("dHSIC")
 #
 
 one.run.baps <- function(p, n,  dist, K = 4, d, b, restrict = 1, signs = T){
-  dat <- ngBap::rBAP(n = n, p = p, dist = dist, d = d, b = b, ancestral = F, shuffle = T, signs = signs)
+  dat <- ngBap::rBAP(n = n, p = p, dist = dist, d = d, b = b, ancestral = F, shuffle = T, signs = signs,
+                     directLow = .9, directHigh = .95, bidirectLow = .45, bidirectHigh = .5)
 
   Y <- dat$Y
 

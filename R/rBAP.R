@@ -47,7 +47,7 @@ getTotal <- function(B){
 #' @param ancestral T restricts the graph to be ancestral; F allows for a BAP which may not be ancestral
 #' @param shuffle Setting shuffle = T randomly relabels the nodes; if set to F then 1... p will always is a valid causal ordering
 #' @param signs Setting signs = F, all parameters are positive; setting signs = T allows both positive and negative values
-#' @param nonAncestral Setting signs = F, all parameters are positive; setting signs = F allows both positive and negative values
+#' @param nonAncestral Setting signs = F, all parameters are positive; setting signs = T allows both positive and negative values
 #' @return
 #' \itemize{
 #' \item B the directed edge coefficients
