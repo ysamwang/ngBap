@@ -8,5 +8,5 @@ Description: Estimates the causal structure of a linear SEM assuming the true mo
 License: MIT
 Encoding: UTF-8
 LazyData: true
-Imports: emplik, dHSIC, energy
+Imports: emplik, dHSIC, energy, mpoly, symmoments
 LinkingTo: 

@@ -12,7 +12,7 @@ library("BCD")
 library("dHSIC")
 
 #######
-# 7/5/21: Include dhsic test
+# 10/15/22: Setting with p = 16
 #
 
 one.run.baps <- function(p, n,  dist, K = 4, d, b, restrict = 1, signs = T){
@@ -45,15 +45,15 @@ one.run.baps <- function(p, n,  dist, K = 4, d, b, restrict = 1, signs = T){
 
 ##########################################################
 library(parallel)
-sim.size <- 250
+sim.size <- 125
 clust.size <- 15
-p <- 20
+p <- 16
 
 
-### param.grid size: 288 ###
-param.grid <- expand.grid(n = c(500, 1000, 1500, 10000, 25000, 50000), dist = c("gamma", "unif", "t", "lognormal"),
+### param.grid size: 384 ###
+param.grid <- expand.grid(n = c(1500, 10000, 25000, 50000), dist = c("gamma", "unif", "t", "lognormal"),
                           regime = c("sparse", "medium", "dense"), signs = c(T, F))
-param.grid <- rbind(param.grid, param.grid)
+param.grid <- rbind(param.grid, param.grid, param.grid, param.grid)
 
 
 
@@ -96,7 +96,7 @@ if(regime == "sparse"){
 } else {
 
   d <- p * 1.5
-  b <- p
+  b <- p * 1.5
 
 }
 
@@ -112,7 +112,25 @@ stopCluster(cl)
 cover <- cbind(cover, out)
 cover <- data.frame(apply(cover, MAR = 2, unlist))
 
-write.table(cover, paste("../resultsNew/bapLarge_",runInd,".csv", sep = ""), row.names = F, sep = ",")
+write.table(cover, paste("../resultsRev/bapLarge/bapLarge_",runInd,".csv", sep = ""), row.names = F, sep = ",")
 
 
+
+### param.grid size: 288 ###
+# param.grid <- expand.grid(n = c(1500, 10000, 25000, 50000), dist = c("gamma", "unif", "t", "lognormal"),
+#                           regime = c("sparse", "medium", "dense"), signs = c(T, F))
+# param.grid <- rbind(param.grid, param.grid, param.grid, param.grid)
+#
+# missing <- c()
+# runInd <- 1
+# dat <- read.csv(paste("~/Dropbox/mixedGraphID/testOutputs/resultsRev/bapLarge/bapLarge_",runInd,".csv", sep = ""),sep = ",")
+# for(runInd in 2:nrow(param.grid)){
+#   if(file.exists(paste("~/Dropbox/mixedGraphID/testOutputs/resultsRev/bapLarge/bapLarge_",runInd,".csv", sep = ""))){
+#     dat <- rbind(dat,
+#                  read.csv(paste("~/Dropbox/mixedGraphID/testOutputs/resultsRev/bapLarge/bapLarge_",runInd,".csv", sep = ""),sep = ","))
+#
+#   } else{
+#     missing <- c(missing, runInd)
+#   }
+# }
 

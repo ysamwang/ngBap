@@ -61,7 +61,8 @@ getTotal <- function(B){
 #' }
 #' @export
 rBAP <- function(n, p, dist, d = NULL, b = NULL, B = NULL, Omega = NULL, directLow = .6, directHigh = 1,
-                 bidirectLow = .3, bidirectHigh = .5, t.df = 13, ancestral = F, shuffle = T, signs = T, nonAncestral = F){
+                 bidirectLow = .3, bidirectHigh = .5, t.df = 13, ancestral = F, shuffle = T, signs = T, nonAncestral = F,
+                 B_is_edges = T){
 
 
   if(is.null(B)){
@@ -78,8 +79,13 @@ rBAP <- function(n, p, dist, d = NULL, b = NULL, B = NULL, Omega = NULL, directL
 
   } else {
 
-    B.edge <- B
-    B <- ifelse(B != 0, 1, 0)
+    if(B_is_edges){
+      B.edge <- sample(c(-1, 1), size = p^2, replace = T) * runif(p^2, directLow, directHigh) * B
+    } else {
+      B.edge <- B
+      B <- ifelse(B != 0, 1, 0)
+    }
+
 
   }
 
@@ -111,12 +117,12 @@ rBAP <- function(n, p, dist, d = NULL, b = NULL, B = NULL, Omega = NULL, directL
 
     Omega.edge <- sample(c(-1, 1), size = p^2, replace = T) * runif(p^2, bidirectLow, bidirectHigh) * Omega
     Omega.edge <- Omega.edge + t(Omega.edge)
-    diag(Omega.edge) <- 1
-    # ensure that Omega.edge is PD with smallest eigenvalue of at least 1e-2
-
+    # Make Omega.edge diagonally dominant
+    diag(Omega.edge) <- rowSums(abs(Omega.edge)) + 1
 
     ## Make Omega symmetric with 1's on diag
     Omega <- Omega + t(Omega) + diag(rep(1,p))
+
 
     if(!signs){
 
@@ -128,8 +134,19 @@ rBAP <- function(n, p, dist, d = NULL, b = NULL, B = NULL, Omega = NULL, directL
 
   } else {
 
-    Omega.edge <- Omega
-    Omega <- ifelse(Omega != 0, 1, 0)
+    if(B_is_edges){
+
+      Omega.edge <- sample(c(-1, 1), size = p^2, replace = T) * runif(p^2, bidirectLow, bidirectHigh) * lower.tri(Omega)
+      Omega.edge <- Omega.edge + t(Omega.edge)
+      diag(Omega.edge) <- diag(rowSums(abs(Omega.edge)) + 1)
+
+    } else {
+
+      Omega.edge <- Omega
+      Omega <- ifelse(Omega != 0, 1, 0)
+
+    }
+
 
   }
 
